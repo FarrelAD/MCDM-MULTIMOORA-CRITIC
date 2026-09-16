@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Multi-Criteria Decision Making using MULTIMOORA and CRITIC weighting"
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 authors = [
     { name = "MCDM-MULTIMOORA-CRITIC Contributors" }
 ]
