@@ -126,44 +126,72 @@ multimoora-critic --input data.csv --criteria 1 1 -1 --output results.csv --form
 ### 1. CRITIC Criterion Weighting
 
 1. **Min-Max Normalization**:
-   $$x'_{ij} = \frac{x_{ij} - \min_{k} x_{kj}}{\max_{k} x_{kj} - \min_{k} x_{kj}}$$
+
+$$
+x'_{ij} = \frac{x_{ij} - \min_{k} x_{kj}}{\max_{k} x_{kj} - \min_{k} x_{kj}}
+$$
+
 2. **Information Measure**:
-   $$C_{j} = \sigma_{j} \sum_{k=1}^{m} (1 - r_{jk})$$
-   where $\sigma_{j}$ is the standard deviation of normalized criterion $j$, and $r_{jk}$ is the Pearson correlation coefficient between criteria $j$ and $k$.
+
+$$
+C_{j} = \sigma_{j} \sum_{k=1}^{m} (1 - r_{jk})
+$$
+
+where $\sigma_{j}$ is the standard deviation of normalized criterion $j$, and $r_{jk}$ is the Pearson correlation coefficient between criteria $j$ and $k$.
+
 3. **Weights**:
-   $$w_{j} = \frac{C_{j}}{\sum_{k=1}^{m} C_{k}}$$
+
+$$
+w_{j} = \frac{C_{j}}{\sum_{k=1}^{m} C_{k}}
+$$
 
 ### 2. Vector Normalization
 
-$$r_{ij} = \frac{x_{ij}}{\sqrt{\sum_{k=1}^{n} x_{kj}^{2}}}$$
+$$
+r_{ij} = \frac{x_{ij}}{\sqrt{\sum_{k=1}^{n} x_{kj}^{2}}}
+$$
 
 ### 3. Ratio System (RS)
 
-$$y_{i} = \sum_{j \in B} w_{j} r_{ij} - \sum_{j \in C} w_{j} r_{ij}$$
+$$
+y_{i} = \sum_{j \in B} w_{j} r_{ij} - \sum_{j \in C} w_{j} r_{ij}
+$$
 
 where $B$ is the set of benefit criteria and $C$ is the set of cost criteria. Higher score implies higher rank ($1 = \max y_{i}$).
 
 ### 4. Reference Point Approach (RPA)
 
 Reference point $r^{*}_{j}$:
-$$r^{*}_{j} = \begin{cases} \max_{i} r_{ij}, & j \in B \\\\ \min_{i} r_{ij}, & j \in C \end{cases}$$
+
+$$
+r^{*}_{j} = \begin{cases} \max_{i} r_{ij}, & j \in B \\ \min_{i} r_{ij}, & j \in C \end{cases}
+$$
 
 RPA Score (Chebyshev Distance):
-$$z_{i} = \max_{j} \left( w_{j} \cdot \left| r^{*}_{j} - r_{ij} \right| \right)$$
+
+$$
+z_{i} = \max_{j} \left( w_{j} \cdot \left| r^{*}_{j} - r_{ij} \right| \right)
+$$
 
 Lower score implies higher rank ($1 = \min z_{i}$).
 
 ### 5. Full Multiplicative Form (FMF)
 
 FMF utility in log-scale:
-$$u_{i} = \sum_{j \in B} w_{j} \ln(x_{ij} + \epsilon) - \sum_{j \in C} w_{j} \ln(x_{ij} + \epsilon)$$
+
+$$
+u_{i} = \sum_{j \in B} w_{j} \ln(x_{ij} + \epsilon) - \sum_{j \in C} w_{j} \ln(x_{ij} + \epsilon)
+$$
 
 Higher score implies higher rank ($1 = \max u_{i}$).
 
 ### 6. Dominance Theory (Final Aggregation)
 
 Multiplicative rank product:
-$$P_{i} = R_{\text{RS}, i} \cdot R_{\text{RPA}, i} \cdot R_{\text{FMF}, i}$$
+
+$$
+P_{i} = R_{\text{RS}, i} \cdot R_{\text{RPA}, i} \cdot R_{\text{FMF}, i}
+$$
 
 Lower rank product implies overall highest MULTIMOORA rank ($1 = \min P_{i}$).
 
